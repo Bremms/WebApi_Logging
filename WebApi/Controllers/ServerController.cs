@@ -11,6 +11,7 @@ using WebApi.Models;
 using WebApi.Models.DTO;
 namespace WebApi.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/Server")]
     public class ServerController : ApiController
     {

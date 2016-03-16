@@ -12,6 +12,7 @@ using WebApi.Models.DTO;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/Service")]
     public class ServiceController : ApiController
     {

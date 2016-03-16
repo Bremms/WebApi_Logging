@@ -25,7 +25,7 @@ namespace WebApi.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
+        private IdentityDbContext context = new IdentityDbContext();
         public AccountController()
         {
         }
@@ -55,16 +55,37 @@ namespace WebApi.Controllers
       
 
         // POST api/Account/Logout
-        [Route("Logout")]
-        public IHttpActionResult Logout()
-        {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
-        }
+        //[Route("Logout")]
+        //public IHttpActionResult Logout()
+        //{
+        //    Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+        //    return Ok();
+        //}
 
        
         // POST api/Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles ="Admin")]
+        [Route("RegisterAdmin")]
+        public async Task<IHttpActionResult> RegisterAdmin(RegisterBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            var user = new ApplicationUser() { UserName = model.Username };
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            RoleManager.Create(new IdentityRole("Admin"));
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            UserManager.AddToRole(user.Id, "Admin");
+            if (!result.Succeeded)
+            {
+
+                return GetErrorResult(result);
+            }
+            return Ok();
+        }
+        [Authorize(Roles ="Admin")]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -74,17 +95,17 @@ namespace WebApi.Controllers
             }
 
             var user = new ApplicationUser() { UserName = model.Username };
-
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            RoleManager.Create(new IdentityRole("User"));
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+            UserManager.AddToRole(user.Id, "User");
             if (!result.Succeeded)
             {
+
                 return GetErrorResult(result);
             }
-
             return Ok();
         }
-
 
         #region Helpers
 
