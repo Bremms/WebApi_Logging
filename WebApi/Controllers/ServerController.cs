@@ -25,15 +25,15 @@ namespace WebApi.Controllers
         }
         [Route("exists={name}")]
         [HttpGet]
-        [ResponseType(typeof(int))]
+        [ResponseType(typeof(ServerDto))]
         public IHttpActionResult ServerExist(string name)
         {
             var s = serverRepo.FindByName(name);
             if (s == null)
             {
-                return Content(HttpStatusCode.NotFound, "0");
+                return NotFound();
             }
-            return Ok("1");
+            return Ok(organiser.convertServer(s));
         }
         [Route("name={name}")]
         [HttpPost]
