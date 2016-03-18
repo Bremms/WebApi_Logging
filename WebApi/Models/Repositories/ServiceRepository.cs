@@ -44,5 +44,9 @@ namespace TestOmgevingFail2ban.Models.Repositories
         {
             context.SaveChanges();
         }
+        public async void SaveChangesAsync()
+        {
+            await context.SaveChangesAsync();
+        }
     }
 }
