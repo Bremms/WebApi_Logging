@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using WebApi.Models;
 
 namespace TestOmgevingFail2ban.Models
 {
@@ -15,5 +16,7 @@ namespace TestOmgevingFail2ban.Models
         public int? User_ID { get; set; }
         [ForeignKey("User_ID")]
         public virtual User User { get; set; }
+        public virtual ICollection<BlackListElement> BlackList { get; set; }
+        public virtual ICollection<WhiteListElement> WhiteList { get; set; }
     }
 }

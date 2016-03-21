@@ -25,5 +25,20 @@ namespace WebApi.Models
         {
             return new ServiceDto() { Name = s.Name, Port = s.Port, Server_ID = s.Server_ID, Sub_ID = s.Subscription_ID, ID = s.ID };
         }
+        public IBlackAndWhiteElement convertToWhiteOrBlackListElement(BwPostDto element,string delimiter)
+        {
+            if (delimiter.Equals("black"))
+            {
+                return new BlackListElement() { Ip = element.Ip, Server_id = element.Server_id, Duration = element.Duration };
+            }
+            else
+            {
+                return new WhiteListElement() { Ip = element.Ip, Server_id = element.Server_id, Duration = element.Duration };
+            }
+        }
+        public BwDto convertToBwDto(IBlackAndWhiteElement bwElement)
+        {
+            return new BwDto() { ID = bwElement.ID, Ip = bwElement.Ip, Duration = bwElement.Duration, Server_Id = bwElement.Server_id };
+        }
     }
 }
