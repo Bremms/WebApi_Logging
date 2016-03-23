@@ -44,7 +44,7 @@ namespace WebApi.Controllers
             {
                 Service new_service = new Service() { Name = name, Server_ID = server_id };
                 serviceRepo.Add(new_service);
-                serviceRepo.SaveChangesAsync();
+                serviceRepo.SaveChanges();
                 return Ok(organiser.convertToServiceDto(new_service));
             }
             catch (Exception e)
