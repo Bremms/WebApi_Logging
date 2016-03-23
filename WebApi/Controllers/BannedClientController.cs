@@ -12,7 +12,7 @@ using WebApi.Models.DTO;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
+  //  [Authorize]
     [RoutePrefix("api/Ban")]
     public class BannedClientController : ApiController
     {
@@ -57,7 +57,7 @@ namespace WebApi.Controllers
         [Route("PostBan")]
         [ResponseType(typeof(BannedClientDto))]
         [HttpPost]
-        public async Task<IHttpActionResult> PostBan(BannedClientDto bcDto)
+        public async Task<IHttpActionResult> PostBan(PostBanDto bcDto)
         {
             if (!ModelState.IsValid)
             {

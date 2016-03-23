@@ -241,6 +241,7 @@
     <Compile Include="Models\DTO\BwDto.cs" />
     <Compile Include="Models\DTO\BwPostDto.cs" />
     <Compile Include="Models\DTO\BannedClientDto.cs" />
+    <Compile Include="Models\DTO\PostBanDto.cs" />
     <Compile Include="Models\DTO\ServerDto.cs" />
     <Compile Include="Models\DTO\ServiceDto.cs" />
     <Compile Include="Models\IBlackAndWhiteElement.cs" />
