@@ -17,9 +17,9 @@ namespace WebApi.Models
         {
             return new ServerDto() { Name = s.Name, User_id = s.User_ID,Server_id = s.ID};
         }
-        public BannedClient convertToBannedClient(BannedClientDto bcDto)
+        public BannedClient convertToBannedClient(PostBanDto bcDto)
         {
-            return new BannedClient() { Ip = bcDto.Ip, Count = bcDto.Count, Longitude = bcDto.Longitude, Latitude = bcDto.Latitude, Country = bcDto.Country, Lastban = bcDto.Created, Service_ID = bcDto.Service_Id };
+            return new BannedClient() { Ip = bcDto.Ip, Count = 1, Longitude = bcDto.Longitude, Latitude = bcDto.Latitude, Country = bcDto.CountryCode, Lastban = DateTime.Now, Service_ID = bcDto.Service_Id };
         }
         public ServiceDto convertToServiceDto(Service s)
         {

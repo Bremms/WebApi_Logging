@@ -33,15 +33,19 @@ namespace WebApi.Controllers
         [Route("AddWhiteList")]
         public IHttpActionResult AddToWhiteList(BwPostDto dto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            if(dto.Ip==null&&dto.Duration==null)
+            if (dto.Ip == null && dto.Duration == null)
             {
                 return BadRequest();
             }
-            WhiteListElement wl =(WhiteListElement) organiser.convertToWhiteOrBlackListElement(dto, "white");
+            if (dto.Duration < DateTime.Now)
+            {
+                return Content(HttpStatusCode.BadRequest, "The duration has to be in the future");
+            }
+            WhiteListElement wl = (WhiteListElement)organiser.convertToWhiteOrBlackListElement(dto, "white");
             whiteRepo.Add(wl);
             whiteRepo.SaveChangesAsync();
             return Ok(organiser.convertToBwDto(wl));
@@ -59,6 +63,10 @@ namespace WebApi.Controllers
             {
                 return BadRequest();
             }
+            if (dto.Duration < DateTime.Now)
+            {
+                return Content(HttpStatusCode.BadRequest, "The duration has to be in the future");
+            }
             BlackListElement bl = (BlackListElement)organiser.convertToWhiteOrBlackListElement(dto, "black");
             blackRepo.Add(bl);
             blackRepo.SaveChangesAsync();
@@ -75,10 +83,10 @@ namespace WebApi.Controllers
                 List<BlackListElement> blackLists = s.BlackList.ToList();
                 List<BwDto> banListDto = blackLists.Select(b => organiser.convertToBwDto(b)).ToList();
                 return Ok(banListDto);
-             }
+            }
             catch (Exception e)
             {
-                return Content(HttpStatusCode.NotFound,String.Format("The server with id {0} could not be found",server_id));
+                return Content(HttpStatusCode.NotFound, String.Format("The server with id {0} could not be found", server_id));
 
             }
         }
