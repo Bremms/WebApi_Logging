@@ -9,13 +9,25 @@ namespace WebApi.Models
 {
     public class DtoOrganiser
     {
-        public BannedClientDto convertBannedClient(BannedClient bc )
+        public GeoDto convertGeoToDto(Geo geo)
+        {
+            GeoDto dto = new GeoDto()
+            {
+                Country = geo.CountryCode,
+                Geo = geo.GeoCityCountry,
+                Ip = geo.Ip,
+                Latitude = geo.Latitude,
+                Longitude = geo.Longitude
+            };
+            return dto;
+        }
+        public BannedClientDto convertBannedClient(BannedClient bc)
         {
             return new BannedClientDto() { ID = bc.ID, Ip = bc.Ip, Count = bc.Count, Longitude = bc.Longitude, Latitude = bc.Latitude, Country = bc.Country, Geo = bc.Geo, Created = bc.Lastban, Service_Id = bc.Service_ID, IpScore_Id = bc.IpScore_ID };
         }
         public ServerDto convertServer(Server s)
         {
-            return new ServerDto() { Name = s.Name, User_id = s.User_ID,Server_id = s.ID};
+            return new ServerDto() { Name = s.Name, User_id = s.User_ID, Server_id = s.ID };
         }
         public BannedClient convertToBannedClient(PostBanDto bcDto)
         {
@@ -25,7 +37,7 @@ namespace WebApi.Models
         {
             return new ServiceDto() { Name = s.Name, Port = s.Port, Server_ID = s.Server_ID, Sub_ID = s.Subscription_ID, ID = s.ID };
         }
-        public IBlackAndWhiteElement convertToWhiteOrBlackListElement(BwPostDto element,string delimiter)
+        public IBlackAndWhiteElement convertToWhiteOrBlackListElement(BwPostDto element, string delimiter)
         {
             if (delimiter.Equals("black"))
             {
