@@ -12,7 +12,7 @@ using WebApi.Models.DTO;
 
 namespace WebApi.Controllers
 {
-  //  [Authorize]
+    [Authorize]
     [RoutePrefix("api/Ban")]
     public class BannedClientController : ApiController
     {

@@ -31,7 +31,7 @@ namespace WebApi.Models
         }
         public BannedClient convertToBannedClient(PostBanDto bcDto)
         {
-            return new BannedClient() { Ip = bcDto.Ip, Count = 1, Longitude = bcDto.Longitude, Latitude = bcDto.Latitude, Country = bcDto.CountryCode, Lastban = DateTime.Now, Service_ID = bcDto.Service_Id };
+            return new BannedClient() { Ip = bcDto.Ip, Count = 1, Longitude = bcDto.Longitude, Latitude = bcDto.Latitude, Country = bcDto.CountryCode, Geo = bcDto.Geo, Lastban = DateTime.Now, Service_ID = bcDto.Service_Id };
         }
         public ServiceDto convertToServiceDto(Service s)
         {
