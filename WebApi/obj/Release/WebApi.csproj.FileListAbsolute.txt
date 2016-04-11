@@ -235,3 +235,7 @@ C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\System.Web.H
 C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\obj\Release\WebApi.csprojResolveAssemblyReference.cache
 C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\obj\Release\WebApi.dll
 C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\obj\Release\WebApi.pdb
+C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\MaxMind.Db.dll
+C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\MaxMind.GeoIP2.dll
+C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\MaxMind.Db.xml
+C:\Users\Bram\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\MaxMind.GeoIP2.xml
