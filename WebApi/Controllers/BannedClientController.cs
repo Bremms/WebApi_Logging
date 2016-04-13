@@ -67,7 +67,7 @@ namespace WebApi.Controllers
             {
                 var bc = organizer.convertToBannedClient(bcDto);
                 banRepo.Add(bc);
-                await banRepo.SaveChangesAsync();
+                banRepo.SaveChanges();
             }
             catch (Exception e)
             {
