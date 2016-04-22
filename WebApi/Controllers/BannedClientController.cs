@@ -115,7 +115,7 @@ namespace WebApi.Controllers
         }
         [Route("BanIpGlobal")]
         [HttpPost]
-        public IHttpActionResult BanIpGlobal([FromUri] int[] ids)
+        public IHttpActionResult BanIpGlobal(Boolean ban,[FromUri] int[] ids)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace WebApi.Controllers
             {
                 try
                 {
-                    ipRepo.FindBy(id).IsCurrentlyBanned = true;
+                    ipRepo.FindBy(id).IsCurrentlyBanned = ban;
                 }catch(Exception exc)
                 {
 
@@ -151,21 +151,6 @@ namespace WebApi.Controllers
             }
             return Ok(result);
         }
-        [Route("UnbanIp")]
-        [HttpPost]
-        public IHttpActionResult PostUnban(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var ip = ipRepo.FindBy(id);
-            if (ip == null)
-                return Content(HttpStatusCode.NotFound, String.Format("The Ip with id {0} could not be found.", id));
-            else
-                ip.IsCurrentlyBanned = false;
-            ipRepo.SaveChanges();
-            return Ok();
-        }
+
     }
 }
