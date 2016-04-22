@@ -52,5 +52,9 @@ namespace WebApi.Models
         {
             return new BwDto() { ID = bwElement.ID, Ip = bwElement.Ip, Duration = bwElement.Duration, Server_Id = bwElement.Server_id };
         }
+        public GlobalBannedClientDto convertToGlobalDto(IpScore bc)
+        {
+            return new GlobalBannedClientDto() { Id = bc.ID ,Ip = bc.Ip,IsGlobalBanned = bc.IsCurrentlyBanned };
+        }
     }
 }

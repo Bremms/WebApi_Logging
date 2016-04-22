@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TestOmgevingFail2ban.Models;
+using TestOmgevingFail2ban.Models.Repositories;
 using WebApi.Models;
 using WebApi.Models.DTO;
 
@@ -17,11 +18,13 @@ namespace WebApi.Controllers
     public class BannedClientController : ApiController
     {
         private BannedClientRepository banRepo;
+        private IpScoreRepository ipRepo;
         private DtoOrganiser organizer;
         public BannedClientController()
         {
             DbEntitiesContext context = new DbEntitiesContext();
             banRepo = new BannedClientRepository(context);
+            ipRepo = new IpScoreRepository(context);
             organizer = new DtoOrganiser();
         }
         [Route("BannedClients")]
@@ -92,6 +95,77 @@ namespace WebApi.Controllers
             bc.Count += 1;
             await banRepo.SaveChangesAsync();
             return Ok(organizer.convertBannedClient(bc));
+        }
+        [Route("GlobalBanned")]
+        [ResponseType(typeof(List<GlobalBannedClientDto>))]
+        [HttpGet]
+        public IHttpActionResult GetGlobalBanned(int threshold)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var bc = ipRepo.FindAll().Where(w => w.Total_score < threshold && w.IsCurrentlyBanned==false);
+            List<GlobalBannedClientDto> ips = new List<GlobalBannedClientDto>();
+            foreach(var b in bc)
+            {
+                ips.Add(organizer.convertToGlobalDto(b));
+            }
+            return Ok(ips);
+        }
+        [Route("BanIpGlobal")]
+        [HttpPost]
+        public IHttpActionResult BanIpGlobal([FromUri] int[] ids)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            foreach(var id in ids)
+            {
+                try
+                {
+                    ipRepo.FindBy(id).IsCurrentlyBanned = true;
+                }catch(Exception exc)
+                {
+
+                }
+            }
+            ipRepo.SaveChanges();
+            return Ok("Succes");
+        }
+        [Route("BansToUnban")]
+        [ResponseType(typeof(List<GlobalBannedClientDto>))]
+        [HttpGet]
+        public IHttpActionResult GetBansToUnban(int threshold)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var ips = ipRepo.FindAll().Where(x => x.Total_score >= threshold && x.IsCurrentlyBanned == true);
+            var result = new List<GlobalBannedClientDto>();
+            foreach(var ip in ips)
+            {
+                result.Add(organizer.convertToGlobalDto(ip));
+            }
+            return Ok(result);
+        }
+        [Route("UnbanIp")]
+        [HttpPost]
+        public IHttpActionResult PostUnban(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var ip = ipRepo.FindBy(id);
+            if (ip == null)
+                return Content(HttpStatusCode.NotFound, String.Format("The Ip with id {0} could not be found.", id));
+            else
+                ip.IsCurrentlyBanned = false;
+            ipRepo.SaveChanges();
+            return Ok();
         }
     }
 }

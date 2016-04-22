@@ -253,6 +253,7 @@
     <Compile Include="Models\DTO\BwPostDto.cs" />
     <Compile Include="Models\DTO\BannedClientDto.cs" />
     <Compile Include="Models\DTO\GeoDto.cs" />
+    <Compile Include="Models\DTO\GlobalBannedClientDto.cs" />
     <Compile Include="Models\DTO\PostBanDto.cs" />
     <Compile Include="Models\DTO\ServerDto.cs" />
     <Compile Include="Models\DTO\ServiceDto.cs" />

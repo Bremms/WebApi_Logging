@@ -14,6 +14,7 @@ namespace TestOmgevingFail2ban.Models
         public double? Score { get; set; }
         public double? Total_score { get; set; }
         public Boolean IsPreviouslyBanned { get; set; }
+        public Boolean IsCurrentlyBanned { get; set; }
         public virtual ICollection<BannedClient> BannedClients { get; set; }
     }
 }
