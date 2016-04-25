@@ -12,7 +12,6 @@ using WebApi.Models.Repositories;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/bwList")]
     public class BlackAndWhiteListController : ApiController
     {
@@ -107,6 +106,89 @@ namespace WebApi.Controllers
                 return Content(HttpStatusCode.NotFound, String.Format("The server with id {0} could not be found", server_id));
             }
 
+        }
+        [HttpGet]
+        [ResponseType(typeof(BwDto))]
+        [Route("getIpsToWhiteList/server_id={server_id}")]
+        public IHttpActionResult GetIpsToWhiteList(int server_id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Server s = serverRepo.FindBy(server_id);
+                List<WhiteListElement> whiteList = s.WhiteList.Where(w => w.Is_Activated == false && w.Duration>DateTime.Now).ToList();
+                return Ok(whiteList.Select(b => organiser.convertToBwDto(b)));
+
+            }catch(Exception e)
+            {
+                return Content(HttpStatusCode.NotFound, String.Format("The server with id {0} could not be found", server_id));
+            }
+        }
+        [HttpGet]
+        [ResponseType(typeof(BwDto))]
+        [Route("getExpiredWhitelistedIps/server_id={server_id}")]
+        public IHttpActionResult getExpiredWhitelistedIps(int server_id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Server s = serverRepo.FindBy(server_id);
+                List<WhiteListElement> whiteList = s.WhiteList.Where(w => w.Is_Activated == true && w.Duration < DateTime.Now).ToList();
+                return Ok(whiteList.Select(b => organiser.convertToBwDto(b)));
+
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.NotFound, String.Format("The server with id {0} could not be found", server_id));
+            }
+        }
+        [HttpGet]
+        [ResponseType(typeof(BwDto))]
+        [Route("getIpsToBlackList/server_id={server_id}")]
+        public IHttpActionResult GetIpsToBlackList(int server_id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Server s = serverRepo.FindBy(server_id);
+                List<BlackListElement> whiteList = s.BlackList.Where(w => w.Is_Activated == false && w.Duration > DateTime.Now).ToList();
+                return Ok(whiteList.Select(b => organiser.convertToBwDto(b)));
+
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.NotFound, String.Format("The server with id {0} could not be found", server_id));
+            }
+        }
+        [HttpGet]
+        [ResponseType(typeof(BwDto))]
+        [Route("getExpiredBlacklistedIps/server_id={server_id}")]
+        public IHttpActionResult getExpiredBlacklistedIps(int server_id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Server s = serverRepo.FindBy(server_id);
+                List<BlackListElement> whiteList = s.BlackList.Where(w => w.Is_Activated == true && w.Duration < DateTime.Now).ToList();
+                return Ok(whiteList.Select(b => organiser.convertToBwDto(b)));
+
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.NotFound, String.Format("The server with id {0} could not be found", server_id));
+            }
         }
     }
 }

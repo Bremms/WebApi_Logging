@@ -11,5 +11,6 @@ namespace WebApi.Models.DTO
         public string Ip { get; set; }
         public DateTime Duration { get; set; }
         public int Server_Id { get; set; }
+        public bool Is_Activated { get; set; }
     }
 }
