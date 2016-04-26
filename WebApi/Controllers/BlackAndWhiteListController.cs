@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TestOmgevingFail2ban.Models;
@@ -130,7 +131,7 @@ namespace WebApi.Controllers
         [HttpGet]
         [ResponseType(typeof(BwDto))]
         [Route("getExpiredWhitelistedIps/server_id={server_id}")]
-        public IHttpActionResult getExpiredWhitelistedIps(int server_id)
+        public IHttpActionResult GetExpiredWhitelistedIps(int server_id)
         {
             if (!ModelState.IsValid)
             {
@@ -172,7 +173,7 @@ namespace WebApi.Controllers
         [HttpGet]
         [ResponseType(typeof(BwDto))]
         [Route("getExpiredBlacklistedIps/server_id={server_id}")]
-        public IHttpActionResult getExpiredBlacklistedIps(int server_id)
+        public IHttpActionResult GetExpiredBlacklistedIps(int server_id)
         {
             if (!ModelState.IsValid)
             {
@@ -188,6 +189,48 @@ namespace WebApi.Controllers
             catch (Exception e)
             {
                 return Content(HttpStatusCode.NotFound, String.Format("The server with id {0} could not be found", server_id));
+            }
+        }
+        [HttpPost]
+        [Route("ActivateWBlack")]
+        public async Task<IHttpActionResult> ActivateBlackList([FromUri]int[] ids)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                foreach (var id in ids)
+                {
+                    var black_el = await blackRepo.FindByIdAsync(id);
+                    blackRepo.Delete(black_el);
+                }
+                return Ok("Succes");
+            }catch(Exception e)
+            {
+                return Content(HttpStatusCode.NotFound,"There was a problem processing the request");
+            }
+        }
+        [HttpPost]
+        [Route("ActivateWhite")]
+        public async Task<IHttpActionResult> ActivateWhiteList([FromUri] int[] ids)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                foreach(var id in ids)
+                {
+                    var white_el = await whiteRepo.FindByAsync(id);
+                    whiteRepo.Delete(white_el);
+                }
+                return Ok("Succes");
+            }catch(Exception e)
+            {
+                return Content(HttpStatusCode.NotFound, "There was a problem processing the request");
             }
         }
     }

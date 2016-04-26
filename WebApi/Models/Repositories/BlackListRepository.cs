@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using TestOmgevingFail2ban.Models;
 using TestOmgevingFail2ban.Models.DAL;
@@ -38,7 +39,10 @@ namespace WebApi.Models.Repositories
         {
             throw new NotImplementedException();
         }
-
+        public Task<BlackListElement> FindByIdAsync(int id)
+        {
+            return blackList.FindAsync(id);
+        }
         public void SaveChanges()
         {
             context.SaveChanges();
