@@ -49,5 +49,10 @@ namespace WebApi.Models.Repositories
         {
             await context.SaveChangesAsync();
         }
+
+        IBlackAndWhiteElement IBwRepository.FindBy(int el_id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
