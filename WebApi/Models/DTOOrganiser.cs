@@ -50,7 +50,7 @@ namespace WebApi.Models
         }
         public BwDto convertToBwDto(IBlackAndWhiteElement bwElement)
         {
-            return new BwDto() { ID = bwElement.ID, Ip = bwElement.Ip, Duration = bwElement.Duration, Server_Id = bwElement.Server_id };
+            return new BwDto() { ID = bwElement.ID, Ip = bwElement.Ip, Duration = bwElement.Duration, Server_Id = bwElement.Server_id, Is_Activated = bwElement.Is_Activated };
         }
         public GlobalBannedClientDto convertToGlobalDto(IpScore bc)
         {

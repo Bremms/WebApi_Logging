@@ -13,5 +13,6 @@ namespace WebApi.Models
         DateTime Duration { get; set; }
         int Server_id { get; set; }
         Server Server { get; set; }
+        bool Is_Activated { get; set; }
     }
 }

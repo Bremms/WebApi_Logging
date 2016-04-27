@@ -16,5 +16,6 @@ namespace WebApi.Models
         public int Server_id { get; set; }
         [ForeignKey("Server_id")]
         public virtual Server Server { get; set; }
+        public bool Is_Activated { get; set; }
     }
 }
