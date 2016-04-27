@@ -192,8 +192,8 @@ namespace WebApi.Controllers
             }
         }
         [HttpPost]
-        [Route("ActivateWBlack")]
-        public async Task<IHttpActionResult> ActivateBlackList([FromUri]int[] ids)
+        [Route("ActivateBlack")]
+        public async Task<IHttpActionResult> ActivateBlackList([FromUri]int[] ids,bool activate)
         {
             if (!ModelState.IsValid)
             {
@@ -204,8 +204,9 @@ namespace WebApi.Controllers
                 foreach (var id in ids)
                 {
                     var black_el = await blackRepo.FindByIdAsync(id);
-                    blackRepo.Delete(black_el);
+                    black_el.Is_Activated = activate;
                 }
+                blackRepo.SaveChanges();
                 return Ok("Succes");
             }catch(Exception e)
             {
@@ -214,7 +215,7 @@ namespace WebApi.Controllers
         }
         [HttpPost]
         [Route("ActivateWhite")]
-        public async Task<IHttpActionResult> ActivateWhiteList([FromUri] int[] ids)
+        public async Task<IHttpActionResult> ActivateWhiteList([FromUri] int[] ids,bool activate)
         {
             if(!ModelState.IsValid)
             {
@@ -225,8 +226,9 @@ namespace WebApi.Controllers
                 foreach(var id in ids)
                 {
                     var white_el = await whiteRepo.FindByAsync(id);
-                    whiteRepo.Delete(white_el);
+                    white_el.Is_Activated = activate;
                 }
+                whiteRepo.SaveChanges();
                 return Ok("Succes");
             }catch(Exception e)
             {
