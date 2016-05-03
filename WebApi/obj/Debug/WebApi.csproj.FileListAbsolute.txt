@@ -481,6 +481,5 @@ C:\Users\bramm\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\Microsoft.O
 C:\Users\bramm\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\bramm\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\bramm\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\bin\System.Web.Http.Owin.xml
-C:\Users\bramm\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\obj\Debug\WebApi.csprojResolveAssemblyReference.cache
 C:\Users\bramm\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\obj\Debug\WebApi.dll
 C:\Users\bramm\Documents\3TIN\Stage\Repo's\WebApi_Logging\WebApi\obj\Debug\WebApi.pdb

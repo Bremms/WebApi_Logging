@@ -9,7 +9,7 @@ namespace WebApi.Models.Repositories
 
         public GeoRepository()
         {
-            reader = new DatabaseReader("C:\\GeoLite2-City.mmdb");
+            reader = new DatabaseReader("C:\\GeoDatabase\\GeoLite2-City.mmdb");
         }
         public Geo getGeoFromIp(string ip)
         {
