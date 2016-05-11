@@ -113,6 +113,23 @@ namespace WebApi.Controllers
             }
             return Ok(ips);
         }
+        [Route("GlobalBanned")]
+        [ResponseType(typeof(List<GlobalBannedClientDto>))]
+        [HttpGet]
+        public IHttpActionResult GetClientsBelowThreshold(int threshold)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var bc = ipRepo.FindAll().Where(w => w.Total_score < threshold);
+            List<GlobalBannedClientDto> ips = new List<GlobalBannedClientDto>();
+            foreach (var b in bc)
+            {
+                ips.Add(organizer.convertToGlobalDto(b));
+            }
+            return Ok(ips);
+        }
         [Route("BanIpGlobal")]
         [HttpPost]
         public IHttpActionResult BanIpGlobal(Boolean ban,[FromUri] int[] ids)
