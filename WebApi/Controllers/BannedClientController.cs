@@ -113,7 +113,7 @@ namespace WebApi.Controllers
             }
             return Ok(ips);
         }
-        [Route("GlobalBanned")]
+        [Route("GetClientsBelowThreshold")]
         [ResponseType(typeof(List<GlobalBannedClientDto>))]
         [HttpGet]
         public IHttpActionResult GetClientsBelowThreshold(int threshold)
