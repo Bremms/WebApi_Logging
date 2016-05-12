@@ -113,7 +113,7 @@ namespace WebApi.Controllers
             }
             return Ok(ips);
         }
-        [Route("GetClientsBelowThreshold")]
+        [Route("GetAlreadyBannedClients")]
         [ResponseType(typeof(List<GlobalBannedClientDto>))]
         [HttpGet]
         public IHttpActionResult GetClientsBelowThreshold(int threshold)
@@ -122,7 +122,7 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var bc = ipRepo.FindAll().Where(w => w.Total_score < threshold);
+            var bc = ipRepo.FindAll().Where(w => w.Total_score < threshold && w.IsCurrentlyBanned==true);
             List<GlobalBannedClientDto> ips = new List<GlobalBannedClientDto>();
             foreach (var b in bc)
             {
