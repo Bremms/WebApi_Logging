@@ -16,7 +16,6 @@ namespace TestOmgevingFail2ban.Models
         public string Country { get; set; }
         public string Geo { get; set; }
         public DateTime Lastban { get; set; }
-        public int Score { get; set; }
         public int Service_ID { get; set; }
         [ForeignKey("Service_ID")]
         public Service Service { get; set; }
